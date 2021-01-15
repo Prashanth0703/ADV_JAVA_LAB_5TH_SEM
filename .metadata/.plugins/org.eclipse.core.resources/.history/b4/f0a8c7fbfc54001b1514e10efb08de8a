@@ -1,0 +1,46 @@
+import java.sql.*;
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.*;
+
+/**
+ * Servlet implementation class q6
+ */
+@WebServlet("/q6")
+public class q6 extends HttpServlet {
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		response.setContentType("text/html");
+		Connection conn;
+		String driver="com.mysql.jdbc.Driver";
+		try {
+			Class.forName(driver).newInstance();
+			int id=Integer.parseInt(request.getParameter("id"));
+			String n = request.getParameter("name");
+			String ad = request.getParameter("addr");
+			String dob = request.getParameter("dob");
+			conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb","root","");
+			PreparedStatement p=conn.prepareStatement("insert into emp values (?,?,?,?)");
+			p.setInt(1,id);
+			p.setString(2, n);
+			p.setString(3, ad);
+			p.setString(4, dob);
+			p.execute();
+			PrintWriter out = response.getWriter();
+			Statement s = conn.createStatement();
+			ResultSet rs = s.executeQuery("select * from emp");
+			out.println("<table border=1>");
+			while(rs.next()) {
+				out.println("<td>");
+				out.println("<tr>"+rs.getInt(1)+"</tr>"+"<tr>"+rs.getString(2)+"</tr>"+"<tr>"+rs.getString(3)+"</tr>"+"<tr>"+rs.getString(4)+"</tr>");
+			}
+			conn.close();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+}

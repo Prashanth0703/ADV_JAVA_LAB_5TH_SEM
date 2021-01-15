@@ -1,0 +1,28 @@
+import java.sql.*;
+import java.io.*;
+public class q2{
+	public static void main(String args[]) {
+		Connection conn;
+		String driver="com.mysql.jdbc.Driver";
+		try {
+			Class.forName(driver).newInstance();
+			conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb", "root", "");
+			String q = "select cgpa,name from stud where cgpa<9";
+			Statement s = conn.createStatement();
+			ResultSet rs = s.executeQuery(q);
+			while(rs.next()) {
+				System.out.println(rs.getDouble(1)+" "+rs.getString(2));
+			}
+			
+			q="update stud set cgpa=9.4 where name='John'";
+			int a = s.executeUpdate(q);
+			while(rs.next()) {
+				System.out.println(rs.getDouble(1)+" "+rs.getString(2));
+			}
+			conn.close();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+}

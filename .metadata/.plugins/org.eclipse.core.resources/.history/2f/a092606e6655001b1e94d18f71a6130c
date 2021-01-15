@@ -1,0 +1,44 @@
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.*;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * Servlet implementation class Q7
+ */
+@WebServlet("/q7_2")
+public class q7_2 extends HttpServlet {
+	final static long serialVersionUID=1;
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+//		doGet(request, response);
+//		sub_id sub_name, fac_id
+		response.setContentType("text/html");
+		try {
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb","root","");
+			String query1 = "Select * from emp";
+			Statement ps = con.createStatement();
+			String query2 = "select * from subject";
+			ResultSet rs = ps.executeQuery(query2);
+			PrintWriter out = response.getWriter();
+			while(rs.next()) {
+				String sub_id = rs.getString(1);
+				String sub_name = rs.getString(2);
+				String fac_id = rs.getString(3);
+				String fin = "<h2>"+sub_id + ", " + sub_name + ", " + fac_id + "</h2><br>";
+				out.println(fin);
+			}
+			
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+}

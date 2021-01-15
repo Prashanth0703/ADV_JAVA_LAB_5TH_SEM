@@ -1,0 +1,38 @@
+import java.sql.*;
+public class q2{
+	public static void main(String args[]) {
+		Connection conn;
+		//String driver="com.mysql.jdbc.Driver";
+		try {
+			conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb", "root", "");
+			String q = "select cgpa,name from stud where cgpa<9";
+			Statement s = conn.createStatement();
+			ResultSet rs = s.executeQuery(q);
+			while(rs.next()) {
+				System.out.println(rs.getDouble(1)+" "+rs.getString(2));
+			}
+			
+			q="select * from stud";
+			s=conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE)
+			rs=s.executeQuery(q);
+			while(rs.next()) {
+				if(rs.getString(2).equals("John")) {
+					rs.updateDouble(1, 8.9);
+					rs.updateRow();
+				}
+			}
+			/*if(a==0)
+				System.out.println("Already updated!");*/
+			q = "select cgpa,name from stud";
+			rs = s.executeQuery(q);
+			System.out.println("\n");
+			while(rs.next()) {
+				System.out.println(rs.getDouble(1)+" "+rs.getString(2));
+			}
+			conn.close();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+}

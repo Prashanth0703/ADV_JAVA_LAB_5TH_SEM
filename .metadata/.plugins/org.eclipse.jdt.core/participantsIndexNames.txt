@@ -1,0 +1,5 @@
+INDEX VERSION 1.131
+/home/prashanth/adv_java_jdbc_exam/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/1765818201.index
+/q10yu/src
+/home/prashanth/adv_java_jdbc_exam/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/1240696255.index
+/jsps/src

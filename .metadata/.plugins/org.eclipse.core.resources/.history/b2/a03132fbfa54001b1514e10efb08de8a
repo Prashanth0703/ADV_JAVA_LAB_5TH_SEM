@@ -1,0 +1,34 @@
+import java.sql.*;
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.*;
+
+/**
+ * Servlet implementation class q6
+ */
+@WebServlet("/q6")
+public class q6 extends HttpServlet {
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		response.setContentType("text/html");
+		Connection conn;
+		PreparedStatement p;
+		String driver="com.mysql.jdbc.Driver";
+		try {
+			Class.forName(driver).newInstance();
+			conn=DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb","root","");
+			p=conn.prepareStatement("insert into emp values (?,?,?,?)");
+			int a=p.executeUpdate();
+			PrintWriter out = response.getWriter();
+			Statement s = conn.createStatement();
+			ResultSet rs = s.executeQuery("select * from emp");
+			out.println("<table border=1>");
+			while(rs.next()) {
+				
+			}
+		}
+	}
+
+}
